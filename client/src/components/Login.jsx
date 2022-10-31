@@ -70,7 +70,7 @@ function SignUp() {
               title: 'Logged in success!',
             });
             setTimeout(() => {
-              window.location.reload(true);
+              // window.location.reload();
               navigate('/home');
             }, 500);
           }

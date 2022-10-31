@@ -15,6 +15,7 @@ async function loginController(req, res, next) {
   }
   try {
     const user = await User.findOne({ email });
+
     if (!user) {
       return next(new ErrorResponse('User does not exists!.', 404));
     }
@@ -38,6 +39,7 @@ async function loginController(req, res, next) {
     });
     next();
   } catch (error) {
+    console.log(error);
     return next(new ErrorResponse(error.message, error.code));
   }
 }

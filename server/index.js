@@ -33,6 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 // database configuration
 connectionToDB();
 
+app.use(express.static('./public/uploads/'));
+
 // route handling
 app.use('/user', userRoute);
 app.use('/password', passwordRoute);
