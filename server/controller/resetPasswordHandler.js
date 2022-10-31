@@ -27,7 +27,8 @@ async function resetPasswordHandler(req, res, next) {
     // set the token to the user
     const setUserToken = await User.findByIdAndUpdate(
       { _id: user._id },
-      { verifyToken: token }
+      { verifyToken: token },
+      { new: true }
     );
 
     // send the reset password link to the user email address

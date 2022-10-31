@@ -10,17 +10,10 @@ async function changePasswordHandler(req, res, next) {
   const { id, token } = req.params;
   const { password } = req.body;
 
-  console.log(id);
-  console.log(token);
-
   try {
     const validUser = await User.findOne({ _id: id, verifyToken: token });
-    // if (!validUser) {
-    //   return next(new ErrorResponse(404, 'User not found!'));
-    // }
-    console.log(validUser);
+
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log(validUser);
 
     if (validUser && verifyToken._id) {
       const newHashedPassword = await bcrypt.hash(password, 10);
@@ -35,6 +28,8 @@ async function changePasswordHandler(req, res, next) {
         success: true,
         message: 'Password changed successfully',
       });
+    } else {
+      return res.status(401).json({ error: 'error' });
     }
   } catch (error) {
     console.log(error);

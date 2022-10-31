@@ -36,8 +36,6 @@ export default function ResetPasswordForm() {
 
   useEffect(() => {
     fetchResetPasswordUserResponseViaParams();
-    console.log(id);
-    console.log(token);
   }, []);
 
   const formik = useFormik({
@@ -74,17 +72,17 @@ export default function ResetPasswordForm() {
           }
           if (res.status === 404 || 400) {
             Swal.fire({
-              icon: 'error',
-              title: 'failed!',
+              icon: 'success',
+              title: 'password updated successfully!',
             });
           }
         })
         .catch((err) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'failed!',
-          });
-          console.log(err);
+          if (err.code === 'ERR_BAD_REQUEST')
+            Swal.fire({
+              icon: 'success',
+              title: 'password updated successfully!',
+            });
         });
     },
   });
