@@ -63,14 +63,16 @@ function SignUp() {
           withCredentials: 'include',
         })
         .then((res) => {
+          localStorage.setItem('token', res.data.token);
           if (res.status === 200) {
             Swal.fire({
               icon: 'success',
               title: 'Logged in success!',
             });
             setTimeout(() => {
+              window.location.reload(true);
               navigate('/home');
-            }, 200);
+            }, 500);
           }
           if (res.status === 400) {
             Swal.fire({

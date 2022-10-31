@@ -14,6 +14,7 @@ function Logout() {
       })
       .then((res) => {
         if (res.status === 200) {
+          localStorage.removeItem('token');
           Swal.fire({
             icon: 'success',
             title: 'Logout success!',
