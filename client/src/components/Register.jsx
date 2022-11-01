@@ -24,11 +24,17 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
+import { GoogleIcon } from '../icons/GoogleSvg';
 import PreviewProfile from './PreviewProfile';
 
 function SignUp() {
   const fileRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  // with google
+  const google = () => {
+    window.open('http://localhost:5000/auth/google', '_self');
+  };
 
   const navigate = useNavigate();
 
@@ -248,6 +254,10 @@ function SignUp() {
                   </Button>
                 </VStack>
               </form>
+              <hr />
+              <Button onClick={google} width="full" spacing="4">
+                Sign in with Google <GoogleIcon marginLeft={'4px'} />{' '}
+              </Button>
             </Stack>
           </Stack>
           <Stack pt={6}>

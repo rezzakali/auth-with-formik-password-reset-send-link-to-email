@@ -1,5 +1,6 @@
 // external import
 import cookieParser from 'cookie-parser';
+import cookieSession from 'cookie-session';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -8,7 +9,9 @@ import express from 'express';
 import connectionToDB from './config/dbConnection.js';
 import errorHandler from './middlewares/errorMiddleware.js';
 import passwordRoute from './routes/passwordRoutes.js';
+import socialMediaRoutes from './routes/socialMediaRoutes.js';
 import userRoute from './routes/userRoutes.js';
+import passport from './utils/passportAuth.js';
 
 // environment configuration
 dotenv.config();
@@ -25,10 +28,23 @@ app.use(
   })
 );
 
+// cookie session
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['ali'],
+    maxAge: 24 * 60 * 60 * 100,
+  })
+);
+
 // body parser
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+// passport configuration
+app.use(passport.initialize());
+app.use(passport.session());
 
 // database configuration
 connectionToDB();
@@ -38,6 +54,7 @@ app.use(express.static('./public/uploads/'));
 // route handling
 app.use('/user', userRoute);
 app.use('/password', passwordRoute);
+app.use('/auth', socialMediaRoutes);
 
 // error handling
 app.use(errorHandler);
